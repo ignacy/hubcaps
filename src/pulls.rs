@@ -237,6 +237,7 @@ pub struct Pull {
     pub statuses_url: String,
     pub number: u64,
     pub state: String,
+    pub draft: bool,
     pub title: String,
     pub body: Option<String>,
     pub created_at: String,
@@ -414,6 +415,11 @@ impl PullListOptionsBuilder {
         self
     }
 
+    pub fn draft(&mut self, draft: bool) -> &mut Self {
+        self.0.params.insert("draft", draft.to_string());
+        self
+    }
+
     pub fn sort(&mut self, sort: IssueSort) -> &mut Self {
         self.0.params.insert("sort", sort.to_string());
         self
@@ -452,6 +458,10 @@ mod tests {
         }
         let tests = vec![
             (PullListOptions::builder().build(), None),
+            (
+                PullListOptions::builder().draft(false).build(), 
+                Some("draft=false".to_owned()),
+            ),
             (
                 PullListOptions::builder().state(State::Closed).build(),
                 Some("state=closed".to_owned()),
