@@ -243,6 +243,7 @@ pub struct Pull {
     pub updated_at: String,
     pub closed_at: Option<String>,
     pub merged_at: Option<String>,
+    pub draft: Option<bool>,
     pub merged: Option<bool>,
     pub head: Commit,
     pub base: Commit,
@@ -414,11 +415,6 @@ impl PullListOptionsBuilder {
         self
     }
 
-    pub fn draft(&mut self, draft: bool) -> &mut Self {
-        self.0.params.insert("draft", draft.to_string());
-        self
-    }
-
     pub fn sort(&mut self, sort: IssueSort) -> &mut Self {
         self.0.params.insert("sort", sort.to_string());
         self
@@ -457,10 +453,6 @@ mod tests {
         }
         let tests = vec![
             (PullListOptions::builder().build(), None),
-            (
-                PullListOptions::builder().draft(false).build(), 
-                Some("draft=false".to_owned()),
-            ),
             (
                 PullListOptions::builder().state(State::Closed).build(),
                 Some("state=closed".to_owned()),
