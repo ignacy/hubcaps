@@ -243,6 +243,7 @@ pub struct Pull {
     pub updated_at: String,
     pub closed_at: Option<String>,
     pub merged_at: Option<String>,
+    pub merged: Option<bool>,
     pub head: Commit,
     pub base: Commit,
     // links
