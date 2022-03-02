@@ -237,7 +237,6 @@ pub struct Pull {
     pub statuses_url: String,
     pub number: u64,
     pub state: String,
-    pub draft: bool,
     pub title: String,
     pub body: Option<String>,
     pub created_at: String,
